@@ -1,7 +1,7 @@
 
 import { Button } from "@mui/material";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -12,13 +12,13 @@ function Dashboard() {
       navigate("/dashboard");
     }
     if (!authToken) {
-      navigate("/login");
+      navigate("/registration");
     }
   }, [navigate]);
 
   const logout = () => {
     sessionStorage.removeItem("auth");
-    navigate("/login");
+    navigate("/registration");
   };
 
   return (
@@ -26,6 +26,7 @@ function Dashboard() {
    <div className="text-center">
    <h1 className="fw-bold">Dashboard</h1>
     <Button className="fw-bold" onClick={logout}>Log out</Button>
+    <Link to='/userdetail' ><Button className="fw-bold">Users Detail</Button></Link>
    </div>
   );
 }
