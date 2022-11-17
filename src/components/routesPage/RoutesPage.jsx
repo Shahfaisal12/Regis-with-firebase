@@ -8,6 +8,7 @@ import { BrowserRouter } from "react-router-dom";
 import Base from "../Layout/Base";
 import UsersDetail from '../../pages/UsersDetail'
 import ForgotPassword from '../elements/ForgotPassword'
+import UpdateUser from '../elements/UpdateUser'
 
 const RoutesPage = () => {
 
@@ -20,6 +21,7 @@ const RoutesPage = () => {
                         <Route path='/registration' element={<Registration />} />
                         <Route path='/dashboard' element={<Dashboard />} />
                         <Route path='/userdetail' element={<UsersDetail />} />
+                        <Route path='/updateuser' element={<UpdateUser />} />
                         <Route path='/forgot' element={<ForgotPassword />} />
                         <Route path='/*' element={<PageNotFound />} />
                     </Routes>

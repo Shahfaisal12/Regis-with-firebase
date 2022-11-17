@@ -25,8 +25,8 @@ function Dashboard() {
 
    <div className="text-center">
    <h1 className="fw-bold">Dashboard</h1>
-    <Button className="fw-bold" onClick={logout}>Log out</Button>
-    <Link to='/userdetail' ><Button className="fw-bold">Users Detail</Button></Link>
+    <Link to='/userdetail' ><Button className="fw-bold">Users Detail</Button></Link> /
+    <Button className="fw-bold" onClick={logout}>Log out</Button> 
    </div>
   );
 }

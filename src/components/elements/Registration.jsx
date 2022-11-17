@@ -24,11 +24,11 @@ import { Link, useNavigate } from 'react-router-dom'
 
 function App() {
 
-    // const [name, setName] = useState()
-    // const [username, setUsername] = useState()
+    const [name, setName] = useState()
+    const [username, setUsername] = useState()
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
-    // const [repassword, setRepassword] = useState()
+    const [repassword, setRepassword] = useState()
 
     const [justifyActive, setJustifyActive] = useState('tab1');;
 
@@ -53,7 +53,7 @@ function App() {
 
         const authentication = getAuth();
         if (id === 2) {
-            createUserWithEmailAndPassword(authentication, email, password) /* name, username, repassword */
+            createUserWithEmailAndPassword(authentication, email, password) /* , name, username, repassword */
                 .then((res) => {
 
                     navigate("/dashboard");
@@ -61,11 +61,11 @@ function App() {
 
                     setDoc(doc(db, "users", res.user.uid), {
                         uid: res.user.uid,
-                        // name: name,
-                        // username: username,
+                        name: name,
+                        username: username,
                         email: email,
                         password: password,
-                        // repassword: repassword
+                        repassword: repassword
                     });
                 })
                 .catch((e) => {
@@ -184,11 +184,11 @@ function App() {
                                 <p className="text-center mt-3">or:</p>
                             </div>
 
-                            {/* <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' onChange={(e) => setName(e.target.value)} /> */}
-                            {/* <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text' onChange={(e) => setUsername(e.target.value)} /> */}
+                            <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' onChange={(e) => setName(e.target.value)} />
+                            <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text' onChange={(e) => setUsername(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' onChange={(e) => setEmail(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Password' id='form1' type='password' onChange={(e) => setPassword(e.target.value)} />
-                            {/* <MDBInput wrapperClass='mb-4' label='Re-Password' id='form1' type='password' onChange={(e) => setRepassword(e.target.value)} /> */}
+                            <MDBInput wrapperClass='mb-4' label='Re-Password' id='form1' type='password' onChange={(e) => setRepassword(e.target.value)} />
 
                             <div className='d-flex justify-content-center mb-4'>
                                 <MDBCheckbox name='flexCheck' id='flexCheckDefault' label='I have read and agree to the terms' />
