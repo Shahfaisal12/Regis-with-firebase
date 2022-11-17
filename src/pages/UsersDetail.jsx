@@ -31,16 +31,16 @@ const UsersDetail = () => {
     <>
       <div>
         <div className="container mt-5">
-          <Link className="btn bg-primary text-white mb-5" to="/dashboard">
+          <Link className="btn btn-outline-primary mb-5" to="/dashboard">
             Back
           </Link>
           <div className="d-flex justify-content-center align-items-center">
             <table className="table w-75">
-              <thead>
+              <thead  className="thead-light">
                 <tr>
                   <th scope="col">S.No</th>
                   <th scope="col">Name</th>
-                  <th scope="col">UserName</th>
+                  <th scope="col">Username</th>
                   <th scope="col">Email</th>
                   <th scope="col">Delete</th>
                   <th scope="col">Edit</th>
@@ -72,7 +72,7 @@ const UsersDetail = () => {
                     );
                   })
                 ) : (
-                  <h3>Data Not Found</h3>
+                  <h3 className="mt-5">Data Not Found</h3>
                 )}
               </tbody>
             </table>
