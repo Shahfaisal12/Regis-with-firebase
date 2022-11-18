@@ -16,13 +16,27 @@ import {
     from 'mdb-react-ui-kit';
 
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { app, db } from '../../firebase-auth';
+import { app, db, storage } from '../../firebase-auth';
 import { setDoc, doc } from "firebase/firestore";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, useNavigate } from 'react-router-dom'
+import {
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    listAll,
+
+} from "firebase/storage";
+import { v4 } from "uuid";
+
 
 function App() {
+
+    const [imageUpload, setImageUpload] = useState(null);
+    const [imageUrls, setImageUrls] = useState([]);
+    const imagesListRef = ref(storage, "images/");
+    console.log(imageUrls)
 
     const [name, setName] = useState()
     const [username, setUsername] = useState()
@@ -47,7 +61,17 @@ function App() {
         if (authToken) {
             navigate("/dashboard");
         }
-    }, [navigate]);
+
+        //  image file url 
+        listAll(imagesListRef).then((response) => {
+            response.items.forEach((item) => {
+                getDownloadURL(item).then((url) => {
+                    setImageUrls((prev) => [...prev, url]);
+                });
+            });
+        });
+
+    }, [navigate], app);
 
     const handleAction = (id) => {
 
@@ -61,6 +85,7 @@ function App() {
 
                     setDoc(doc(db, "users", res.user.uid), {
                         uid: res.user.uid,
+                        image:imageUrls,
                         name: name,
                         username: username,
                         email: email,
@@ -76,6 +101,15 @@ function App() {
                         toast.error("please check the email");
                     }
                 });
+
+            if (imageUpload == null) return;
+            const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+            uploadBytes(imageRef, imageUpload).then((snapshot) => {
+                getDownloadURL(snapshot.ref).then((url) => {
+                    setImageUrls((prev) => [...prev, url]);
+                });
+            });
+
         }
 
         if (id === 1) {
@@ -184,6 +218,7 @@ function App() {
                                 <p className="text-center mt-3">or:</p>
                             </div>
 
+                            <input type="file" className="form-control mb-4" id="customFile" onChange={(e) => { setImageUpload(e.target.files[0]) }} />
                             <MDBInput wrapperClass='mb-4' label='Name' id='form1' type='text' onChange={(e) => setName(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='text' onChange={(e) => setUsername(e.target.value)} />
                             <MDBInput wrapperClass='mb-4' label='Email' id='form1' type='email' onChange={(e) => setEmail(e.target.value)} />

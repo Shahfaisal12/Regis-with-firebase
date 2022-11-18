@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { getAuth } from "firebase/auth";
 import { db } from "../firebase-auth";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
 
 const UsersDetail = () => {
   const [user, setUser] = useState([]);
@@ -34,6 +34,8 @@ const UsersDetail = () => {
           <Link className="btn btn-outline-primary mb-5" to="/dashboard">
             Back
           </Link>
+          
+          <ToastContainer />
           <div className="d-flex justify-content-center align-items-center">
             <table className="table w-75">
               <thead  className="thead-light">
@@ -42,6 +44,7 @@ const UsersDetail = () => {
                   <th scope="col">Name</th>
                   <th scope="col">Username</th>
                   <th scope="col">Email</th>
+                  <th scope="col">image</th>
                   <th scope="col">Delete</th>
                   <th scope="col">Edit</th>
                 </tr>
@@ -56,6 +59,7 @@ const UsersDetail = () => {
                           <td>{user.name}</td>
                           <td>{user.username}</td>
                           <td>{user.email}</td>
+                          <td><img src={user.image} alt="" width={30} /></td>
                           <td>
                             <button
                               className="btn bg-danger text-white"
@@ -66,7 +70,7 @@ const UsersDetail = () => {
                               Delete
                             </button>
                           </td>
-                          <td><Link className="btn bg-secondary text-white" to='/updateuser'>Edit</Link></td>
+                          <td><Link className="btn bg-secondary text-white" to={`/updateuser/${user.id}`}>Edit</Link></td>
                         </tr>
                       </>
                     );
